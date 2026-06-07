@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:server": "node server/stripe-server.js",
+    "dev:all": "node server/stripe-server.js & vite",
     "build": "vite build",
     "preview": "vite preview"
   },

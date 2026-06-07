@@ -1,10 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
 import { useCart } from '../context/CartContext'
 
-export default function Checkout() {
+// Load Stripe with publishable key from env
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '')
+
+const CARD_ELEMENT_OPTIONS = {
+  style: {
+    base: {
+      fontSize: '16px',
+      fontFamily: 'Inter, sans-serif',
+      color: '#5A3E28',
+      '::placeholder': { color: '#9C8570' },
+    },
+    invalid: { color: '#C45A5A' },
+  },
+}
+
+function CheckoutForm() {
   const { items, total, clearCart } = useCart()
   const navigate = useNavigate()
+  const stripe = useStripe()
+  const elements = useElements()
 
   const [form, setForm] = useState({
     name: '',
@@ -16,6 +35,7 @@ export default function Checkout() {
   })
   const [processing, setProcessing] = useState(false)
   const [error, setError] = useState('')
+  const [succeeded, setSucceeded] = useState(false)
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -25,42 +45,74 @@ export default function Checkout() {
     e.preventDefault()
     setError('')
 
-    // Basic validation
     if (!form.name || !form.email) {
       setError('Please fill in your name and email.')
       return
     }
-
     if (items.length === 0) {
       setError('Your cart is empty.')
+      return
+    }
+    if (!stripe || !elements) {
+      setError('Stripe is still loading. Please try again.')
       return
     }
 
     setProcessing(true)
 
-    // Simulate payment processing
-    // In production, this would integrate with Stripe Elements
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      // 1. Create PaymentIntent on the server
+      const response = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: total }),
+      })
 
-      // Generate a fake order ID
-      const orderId = 'PP-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase()
-
-      // Store order info for download page
-      const orderData = {
-        id: orderId,
-        email: form.email,
-        name: form.name,
-        items: [...items],
-        total,
-        date: new Date().toISOString(),
+      if (!response.ok) {
+        const errData = await response.json()
+        throw new Error(errData.error || 'Failed to create payment')
       }
 
-      localStorage.setItem(`order-${orderId}`, JSON.stringify(orderData))
-      clearCart()
-      navigate(`/download/${orderId}`)
+      const { clientSecret } = await response.json()
+
+      // 2. Confirm the card payment
+      const cardElement = elements.getElement(CardElement)
+      const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: cardElement,
+          billing_details: {
+            name: form.name,
+            email: form.email,
+          },
+        },
+      })
+
+      if (confirmError) {
+        throw new Error(confirmError.message)
+      }
+
+      if (paymentIntent.status === 'succeeded') {
+        setSucceeded(true)
+
+        // Generate order ID from Stripe's payment intent
+        const orderId = 'PP-' + paymentIntent.id.replace('pi_', '').toUpperCase()
+
+        // Store order info
+        const orderData = {
+          id: orderId,
+          email: form.email,
+          name: form.name,
+          items: [...items],
+          total,
+          date: new Date().toISOString(),
+        }
+
+        localStorage.setItem(`order-${orderId}`, JSON.stringify(orderData))
+        clearCart()
+        navigate(`/download/${orderId}`)
+      }
     } catch (err) {
-      setError('Payment processing failed. Please try again.')
+      setError(err.message || 'Payment failed. Please try again.')
       setProcessing(false)
     }
   }
@@ -98,6 +150,7 @@ export default function Checkout() {
             <h2>Your Information</h2>
 
             {error && <div className="message message-error">{error}</div>}
+            {succeeded && <div className="message message-success">Payment successful!</div>}
 
             <div className="form-group">
               <label htmlFor="name">Full Name *</label>
@@ -178,11 +231,9 @@ export default function Checkout() {
             </div>
 
             <div className="form-group">
-              <label>Payment</label>
-              <div className="stripe-element" style={{ padding: '1rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>
-                💳 Stripe payment will be integrated here in production
-                <br />
-                <small>For preview: clicking "Pay" completes a simulated purchase</small>
+              <label>Card Details</label>
+              <div className="stripe-element">
+                <CardElement options={CARD_ELEMENT_OPTIONS} />
               </div>
             </div>
 
@@ -190,7 +241,7 @@ export default function Checkout() {
               type="submit"
               className="btn btn-primary btn-lg"
               style={{ width: '100%', marginTop: 'var(--space-md)' }}
-              disabled={processing}
+              disabled={processing || !stripe || succeeded}
             >
               {processing ? (
                 <>
@@ -228,11 +279,27 @@ export default function Checkout() {
               </div>
             </div>
             <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: 'var(--space-md)', textAlign: 'center' }}>
-              🔒 Secure checkout · No payment data stored
+              🔒 Powered by Stripe · Your card info is never stored
             </p>
           </div>
         </div>
       </div>
     </div>
+  )
+}
+
+export default function Checkout() {
+  const { total } = useCart()
+
+  const options = {
+    mode: 'payment',
+    amount: Math.round(total * 100),
+    currency: 'usd',
+  }
+
+  return (
+    <Elements stripe={stripePromise} options={options}>
+      <CheckoutForm />
+    </Elements>
   )
 }
