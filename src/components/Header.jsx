@@ -29,6 +29,7 @@ export default function Header() {
           <Link to="/catalog/journals" className="nav-link" onClick={() => setMenuOpen(false)}>Journals</Link>
           <Link to="/catalog/planners" className="nav-link" onClick={() => setMenuOpen(false)}>Planners</Link>
           <Link to="/catalog/stickers" className="nav-link" onClick={() => setMenuOpen(false)}>Stickers</Link>
+          <Link to="/catalog/bundles" className="nav-link" onClick={() => setMenuOpen(false)}>Bundles</Link>
           <Link to="/cart" className="cart-button" onClick={() => setMenuOpen(false)}>
             🛒 Cart
             {itemCount > 0 && <span className="cart-count">{itemCount}</span>}

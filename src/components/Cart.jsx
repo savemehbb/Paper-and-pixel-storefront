@@ -26,6 +26,7 @@ export default function Cart() {
     journals: '📓',
     planners: '📅',
     stickers: '✨',
+    bundles: '🎁',
   }
 
   return (

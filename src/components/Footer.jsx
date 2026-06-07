@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="footer-inner">
         <div className="footer-brand">
           <h3><span style={{ fontFamily: 'var(--font-display)' }}>Paper &amp; Pixel</span></h3>
-          <p>Beautiful digital printables — greeting cards, journals, planners, and stickers. Instant download, zero shipping.</p>
+          <p>Beautiful digital printables — greeting cards, journals, planners, stickers, and bundles. Instant download, zero shipping.</p>
         </div>
         <div>
           <h4>Shop</h4>
@@ -17,6 +17,7 @@ export default function Footer() {
             <li><Link to="/catalog/journals">Journals</Link></li>
             <li><Link to="/catalog/planners">Planners</Link></li>
             <li><Link to="/catalog/stickers">Stickers</Link></li>
+            <li><Link to="/catalog/bundles">Bundles</Link></li>
           </ul>
         </div>
         <div>

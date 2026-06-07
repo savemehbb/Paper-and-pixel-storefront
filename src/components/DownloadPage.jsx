@@ -31,6 +31,7 @@ export default function DownloadPage() {
     journals: '📓',
     planners: '📅',
     stickers: '✨',
+    bundles: '🎁',
   }
 
   const storedOrders = JSON.parse(localStorage.getItem('previous-downloads') || '[]')

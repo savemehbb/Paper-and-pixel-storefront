@@ -83,6 +83,7 @@ export default function Checkout() {
     journals: '📓',
     planners: '📅',
     stickers: '✨',
+    bundles: '🎁',
   }
 
   return (

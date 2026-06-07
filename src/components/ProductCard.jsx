@@ -6,6 +6,7 @@ export default function ProductCard({ product }) {
     journals: '📓',
     planners: '📅',
     stickers: '✨',
+    bundles: '🎁',
   }
 
   return (

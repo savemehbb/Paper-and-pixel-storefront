@@ -846,6 +846,7 @@
 .category-journals .placeholder { background: linear-gradient(135deg, var(--color-sage), var(--color-tan)); }
 .category-planners .placeholder { background: linear-gradient(135deg, var(--color-lavender), var(--color-sand)); }
 .category-stickers .placeholder { background: linear-gradient(135deg, var(--color-blush), var(--color-rose)); }
+.category-bundles .placeholder { background: linear-gradient(135deg, var(--color-gold), var(--color-terracotta)); }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 8px; }

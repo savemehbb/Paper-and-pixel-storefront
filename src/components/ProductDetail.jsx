@@ -28,6 +28,7 @@ export default function ProductDetail() {
     journals: '📓',
     planners: '📅',
     stickers: '✨',
+    bundles: '🎁',
   }
 
   const handleAddToCart = () => {

@@ -153,6 +153,82 @@ const products = [
     downloadPath: '/downloads/stickers/sticker-kids-01.pdf',
     details: ['High-resolution PNG files', '1 full sheet (US Letter)', '36 stickers per sheet', 'Bright, kid-friendly designs', 'Instant digital download'],
   },
+
+  // --- NEW INDIVIDUAL PRODUCTS ---
+  {
+    id: 'card-holiday-01',
+    name: "Season's Greetings",
+    category: 'cards',
+    price: 3.99,
+    description: 'A warm and festive holiday greeting card with elegant seasonal illustrations.',
+    longDescription: 'Spread holiday cheer with this beautifully designed greeting card. Featuring elegant seasonal motifs in rich reds and greens, this card is perfect for sending warm wishes to family and friends during the holiday season.',
+    image: '/images/cards/holiday-card-front.png',
+    preview: '/images/previews/holiday-card-front-preview.jpg',
+    downloadPath: '/downloads/cards/card-holiday-01.pdf',
+    details: ['High-resolution PDF (300 DPI)', 'A2 size (4.25" x 5.5")', 'Blank inside for your message', 'Matching envelope template', 'Instant digital download'],
+  },
+  {
+    id: 'planner-fitness-01',
+    name: 'Fitness Tracker Planner',
+    category: 'planners',
+    price: 6.99,
+    description: 'Track your workouts, meals, and progress with this comprehensive fitness planner.',
+    longDescription: 'Achieve your fitness goals with this dedicated workout planner. Includes weekly workout logs, meal planning pages, water tracker, progress photos, and monthly goal setting. Perfect for gym-goers and home workout enthusiasts alike.',
+    image: '/images/planners/fitness-tracker-planner.png',
+    preview: '/images/previews/fitness-tracker-planner-preview.jpg',
+    downloadPath: '/downloads/planners/planner-fitness-01.pdf',
+    details: ['High-resolution PDF (300 DPI)', '52 weekly spreads', 'Letter size (8.5" x 11")', 'Workout & meal tracking', 'Progress photo pages', 'Instant digital download'],
+  },
+  {
+    id: 'sticker-washi-01',
+    name: 'Washi Tape Stickers',
+    category: 'stickers',
+    price: 4.99,
+    description: 'Beautiful washi tape-inspired stickers for decorating journals, planners, and more.',
+    longDescription: 'Bring the charm of washi tape to your sticker collection! These beautifully designed sticker sheets feature repeating patterns in coordinating color palettes — florals, geometrics, stripes, and dots. Perfect for borders, decorations, and accents.',
+    image: '/images/stickers/washi-tape-stickers.png',
+    preview: '/images/previews/washi-tape-stickers-preview.jpg',
+    downloadPath: '/downloads/stickers/sticker-washi-01.pdf',
+    details: ['High-resolution PNG files', '2 full sheets (US Letter)', '4 unique patterns', 'Easy to cut and apply', 'Instant digital download'],
+  },
+
+  // --- BUNDLES ---
+  {
+    id: 'bundle-selfcare-01',
+    name: 'Self Care Bundle',
+    category: 'bundles',
+    price: 14.99,
+    description: 'Everything you need for a mindful self-care routine — journal, meal planner, and aesthetic stickers.',
+    longDescription: 'Treat yourself to this thoughtfully curated self-care bundle. Includes the Morning Pages Journal for daily reflection, the Weekly Meal Planner for nourishing meals, and the Aesthetic Vibes sticker pack for decorating it all. Save $3.98 vs. buying separately!',
+    image: '/images/bundles/self-care-bundle-cover.png',
+    preview: '/images/bundles/self-care-bundle-cover.png',
+    downloadPath: '/downloads/self-care-bundle-cover.pdf',
+    details: ['3 full products in one bundle', 'Morning Pages Journal ($7.99)', 'Weekly Meal Planner ($6.99)', 'Aesthetic Vibes Stickers ($4.99)', 'Total value: $19.97 — You save $4.98!', 'Instant digital download'],
+  },
+  {
+    id: 'bundle-school-01',
+    name: 'Back to School Pack',
+    category: 'bundles',
+    price: 10.99,
+    description: 'Get kids organized and inspired with a journal, daily planner, and fun reward stickers.',
+    longDescription: 'Set your kids up for success with this back-to-school bundle. The Kids Creative Journal encourages writing and drawing, the Daily Focus Planner builds organization skills, and the Rainbow Rewards stickers make achievements fun. Perfect for ages 5-12.',
+    image: '/images/bundles/back-to-school-bundle-cover.png',
+    preview: '/images/bundles/back-to-school-bundle-cover.png',
+    downloadPath: '/downloads/back-to-school-bundle-cover.pdf',
+    details: ['3 full products in one bundle', "My Little Storybook Journal ($5.99)", 'Daily Focus Planner ($5.99)', 'Rainbow Rewards Stickers ($3.99)', 'Total value: $15.97 — You save $4.98!', 'Instant digital download'],
+  },
+  {
+    id: 'bundle-cards-01',
+    name: 'Greeting Card Variety Pack',
+    category: 'bundles',
+    price: 12.99,
+    description: 'A complete collection of 5 premium greeting cards for every occasion.',
+    longDescription: 'Never be caught without the perfect card again! This variety pack includes 5 beautifully designed greeting cards: Birthday Blooms, Gratitude Garden, You Did It!, Season\'s Greetings, and our Anniversary card. Each comes with a matching envelope template. Perfect to have on hand for every occasion.',
+    image: '/images/bundles/greeting-card-variety-cover.png',
+    preview: '/images/bundles/greeting-card-variety-cover.png',
+    downloadPath: '/downloads/greeting-card-variety-cover.pdf',
+    details: ['5 premium greeting cards', 'Birthday, Thank You, Congrats, Holiday, & Anniversary', 'Each A2 size (4.25" x 5.5")', 'Matching envelope templates', 'Total value: $19.95 — You save $6.96!', 'Instant digital download'],
+  },
 ]
 
 export const categories = [
@@ -160,6 +236,7 @@ export const categories = [
   { id: 'journals', name: 'Journals', icon: '📓', description: 'Capture thoughts, dreams, and stories.' },
   { id: 'planners', name: 'Planners', icon: '📅', description: 'Plan your life with intention.' },
   { id: 'stickers', name: 'Stickers', icon: '✨', description: 'Decorate your world, your way.' },
+  { id: 'bundles', name: 'Bundles', icon: '🎁', description: 'Curated sets at a great value.' },
 ]
 
 export function getProductsByCategory(category) {
