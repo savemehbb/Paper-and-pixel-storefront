@@ -7,8 +7,10 @@
     "dev": "vite",
     "dev:server": "node server/stripe-server.js",
     "dev:all": "node server/stripe-server.js & vite",
+    "start": "node server/stripe-server.js",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "cd server && npm install"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^3.6.0",
